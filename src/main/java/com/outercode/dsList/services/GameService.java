@@ -2,7 +2,6 @@ package com.outercode.dsList.services;
 
 import com.outercode.dsList.dto.GameDTO;
 import com.outercode.dsList.dto.GameMinDTO;
-import com.outercode.dsList.projections.GameMinProjection;
 import com.outercode.dsList.repositories.GameRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
