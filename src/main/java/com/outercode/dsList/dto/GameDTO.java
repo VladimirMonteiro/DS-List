@@ -2,7 +2,8 @@ package com.outercode.dsList.dto;
 
 import com.outercode.dsList.entities.Game;
 
-public record GameDTO(String title,
+public record GameDTO(Long id,
+                      String title,
                       Integer year,
                       Double score,
                       String genre,
@@ -12,7 +13,7 @@ public record GameDTO(String title,
                       String longDescription){
 
     public GameDTO(Game entity) {
-        this(entity.getTitle(), entity.getYear(), entity.getScore(), entity.getGenre(), entity.getPlatforms(),
+        this(entity.getId(), entity.getTitle(), entity.getYear(), entity.getScore(), entity.getGenre(), entity.getPlatforms(),
              entity.getImgUrl(), entity.getShortDescription(), entity.getLongDescription());
     }
 
