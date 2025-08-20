@@ -3,6 +3,7 @@ package com.outercode.dsList.services;
 import com.outercode.dsList.dto.GameDTO;
 import com.outercode.dsList.dto.GameMinDTO;
 import com.outercode.dsList.repositories.GameRepository;
+import com.outercode.dsList.utils.InitGameMinProjection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -77,5 +78,31 @@ class GameServiceTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
         verify(gameRepository, times(1)).findById(anyLong());
+    }
+
+    @Test
+   void findGameByList_WithValidListId_ReturnsGames() {
+        when(gameRepository.searchByList(anyLong())).thenReturn(List.of(new InitGameMinProjection()));
+
+        List<GameMinDTO> result = gameService.findByList(1L);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(GAME_MIN_DTO.id(), result.getFirst().id());
+        assertEquals(GAME_MIN_DTO.title(), result.getFirst().title());
+        assertEquals(GAME_MIN_DTO.year(), result.getFirst().year());
+        assertEquals(GAME_MIN_DTO.imgUrl(), result.getFirst().imgUrl());
+        verify(gameRepository, times(1)).searchByList(anyLong());
+    }
+
+    @Test
+    void findGameByList_WithInvalidListId_ReturnsEmptyList() {
+        when(gameRepository.searchByList(anyLong())).thenReturn(List.of());
+
+        List<GameMinDTO> result = gameService.findByList(999L);
+
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+        verify(gameRepository, times(1)).searchByList(anyLong());
     }
 }
